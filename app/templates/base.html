@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="pt-br"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}AutoPrime{% endblock %} · Gestão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head>
+<body><aside class="sidebar"><a class="brand" href="{{ url_for('main.dashboard') }}"><span class="brand-icon">A</span><span>Auto<span class="accent">Prime</span><small>GESTÃO AUTOMOTIVA</small></span></a>
+<nav><span class="nav-label">VISÃO GERAL</span><a href="{{ url_for('main.dashboard') }}" class="{% if request.endpoint=='main.dashboard' %}active{% endif %}">▦ <span>Painel</span></a>
+<span class="nav-label">CADASTROS</span><a href="{{ url_for('marcas.listar') }}">◈ <span>Marcas</span></a><a href="{{ url_for('carros.listar') }}">▣ <span>Veículos</span></a><a href="{{ url_for('opcionais.listar') }}">◇ <span>Opcionais</span></a>
+<span class="nav-label">GESTÃO</span><a href="{{ url_for('relatorios.index') }}">▤ <span>Relatórios</span></a></nav>
+<div class="sidebar-bottom"><div class="avatar">JR</div><div><b>Administrador</b><small>Concessionária</small></div></div></aside>
+<main class="main"><header class="topbar"><div><span class="eyebrow">SISTEMA DE GESTÃO</span><h1>{% block heading %}Painel{% endblock %}</h1></div><div class="top-right"><span class="status-dot"></span> Sistema local</div></header>
+{% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="messages">{% for category,message in messages %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+<section class="content">{% block content %}{% endblock %}</section><footer>AutoPrime · Projeto acadêmico de Desenvolvimento Web MVC</footer></main></body></html>

@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}Relatórios{% endblock %}{% block heading %}Relatórios{% endblock %}
+{% block content %}
+<div class="report-intro"><span class="report-icon">▤</span><div><h2>Relatório de veículos por marca</h2><p>Escolha um fabricante para consultar os veículos vinculados e exportar a relação em PDF.</p></div></div>
+<div class="form-card"><form method="post">{{ form.hidden_tag() }}<div class="field">{{ form.marca_id.label }}{{ form.marca_id() }}</div><div class="form-actions">{{ form.submit(class_="btn btn-primary", value="Consultar veículos") }}</div></form></div>
+{% if marca %}
+<div class="panel" style="margin-top:18px"><div class="panel-head"><div><h3>{{ marca.nome }}</h3><p>{{ carros|length }} veículo(s) encontrado(s)</p></div><a class="btn btn-primary" href="{{ url_for('relatorios.pdf', marca_id=marca.id) }}">↓ Exportar para PDF</a></div>
+{% if carros %}<div class="table-wrap"><table><thead><tr><th>MODELO</th><th>ANO</th><th>PREÇO</th><th>QUILOMETRAGEM</th><th>COMBUSTÍVEL</th></tr></thead><tbody>{% for c in carros %}<tr><td><b>{{ c.modelo }}</b></td><td>{{ c.ano }}</td><td class="price">R$ {{ "{:,.2f}".format(c.preco).replace(",", "X").replace(".", ",").replace("X", ".") }}</td><td>{{ "{:,}".format(c.quilometragem).replace(",",".") }} km</td><td>{{ c.combustivel }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty"><b>Nenhum veículo cadastrado para esta marca</b></div>{% endif %}</div>
+{% endif %}
+{% if not form.marca_id.choices %}<p class="muted">Cadastre uma marca antes de gerar relatórios.</p>{% endif %}
+{% endblock %}
